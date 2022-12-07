@@ -1,6 +1,8 @@
+// importando arquivo de service e mongoose
 import tagService from '../services/tag.service.js';
 import mongoose from 'mongoose';
 
+// função que cria uma nova tag no sistema
 const create = async (req, res) => {
     try {
         const { macAddress, name, category, positionX, positionY, positionZ } = req.body;
@@ -34,6 +36,7 @@ const create = async (req, res) => {
     }
 }
 
+// função que retorna todas as tags do sistema
 const getAll = async (req, res, next) => {
     try {
         const tags = await tagService.getAllService();
@@ -51,6 +54,7 @@ const getAll = async (req, res, next) => {
     }
 }
 
+// função que atualiza as informações da tag
 const update = async (req, res) => {
     try {
         const { id, macAddress, name, category, positionX, positionY, positionZ } = req.body;
@@ -69,6 +73,7 @@ const update = async (req, res) => {
     }
 }
 
+// função que deleta uma tag do sistema
 const erase = async (req, res) => {
     try {
         const { id } = req.params;
@@ -81,6 +86,7 @@ const erase = async (req, res) => {
     }
 }
 
+// função que conta a quantidade de tags existentes
 const countDocuments = async (req, res) => {
     try {
         let result = await tagService.countDocumentsService();
@@ -97,6 +103,7 @@ const countDocuments = async (req, res) => {
     }
 }
 
+// exportando métodos criados acima
 export default {
     create,
     getAll,

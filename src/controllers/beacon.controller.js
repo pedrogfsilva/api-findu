@@ -1,5 +1,7 @@
+// importando arquivo de service
 import beaconService from '../services/beacon.service.js';
 
+// função que retorna todos os beacons cadastrados
 const getAll = async (req, res) => {
     try {
         const beacons = await beaconService.getAllService();
@@ -14,6 +16,7 @@ const getAll = async (req, res) => {
     }
 }
 
+// função que cria um novo beacon no sistema
 const create = async (req, res) => {
     try {
         const { macAddress, distanceA, distanceC } = req.body;
@@ -42,6 +45,7 @@ const create = async (req, res) => {
     }
 }
 
+// função que conta a quantidade de beacons
 const countDocuments = async (req, res) => {
     try {
         let result = await beaconService.countDocumentsService();
@@ -58,6 +62,7 @@ const countDocuments = async (req, res) => {
     }
 }
 
+// exportando métodos criados acima
 export default {
     getAll,
     create,

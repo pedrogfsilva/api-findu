@@ -1,5 +1,7 @@
+// importando módulo mongoose
 import mongoose from 'mongoose';
 
+// criando uma schema com as informações das tags
 const TagSchema = new mongoose.Schema({
     macAddress: {
         type: String,
@@ -28,6 +30,8 @@ const TagSchema = new mongoose.Schema({
     }
 });
 
+// criando modelo
 const Tag = mongoose.model('Tag', TagSchema);
 
+// exportando modelo
 export default Tag;

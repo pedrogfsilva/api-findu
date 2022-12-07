@@ -1,5 +1,7 @@
+// importando módulo mongoose
 import mongoose from 'mongoose';
 
+// criando uma schema com as informações dos beacons
 const BeaconSchema = new mongoose.Schema({
     macAddress: {
         type: String,
@@ -17,6 +19,8 @@ const BeaconSchema = new mongoose.Schema({
     }
 });
 
+// criando modelo
 const Beacon = mongoose.model('Beacon', BeaconSchema);
 
+// exportando modelo
 export default Beacon;

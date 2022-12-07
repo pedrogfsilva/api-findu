@@ -1,5 +1,7 @@
+// importando arquivo de service
 import categoryService from '../services/category.service.js';
 
+// função que cria uma categoria no sistema
 const create = async (req, res) => {
     try {
         const { name, color } = req.body;
@@ -28,6 +30,7 @@ const create = async (req, res) => {
     }
 }
 
+// função que retorna todas as categorias cadastradas
 const getAll = async (req, res) => {
     try {
         const categorys = await categoryService.getAllService();
@@ -42,6 +45,7 @@ const getAll = async (req, res) => {
     }
 }
 
+// função que conta a quantidade de categorias
 const countDocuments = async (req, res) => {
     try {
         let result = await categoryService.countDocumentsService();
@@ -59,6 +63,7 @@ const countDocuments = async (req, res) => {
     }
 }
 
+// exportando métodos criados acima
 export default {
     create,
     getAll,
