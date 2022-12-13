@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
+import bodyParser from 'body-parser';
 
 // importando arquivos de rotas
 import tagRoute from './src/routes/tag.route.js';
@@ -27,48 +28,59 @@ db.connectDatabase();
 // usando middlewares e rotas
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/tag', tagRoute);
 app.use('/category', categoryRoute);
 app.use('/beacon', beaconRoute);
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-    },
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads')
+//     },
+//     filename: (req, file, cb) => {
+//         console.log(file);
+//         cb(null, Date.now() + path.extname(file.originalname))
+//     }
+// });
+
+// const upload = multer({ storage: storage });
+
+// app.post('/upload', upload.single('image'), (req, res) => {
+//     res.send('ok');
+// });
+
+const Storage = multer.diskStorage({
+    destination: 'uploads',
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
+        cb(null, file.originalname);
+    },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: Storage }).single('testImage');
 
-app.get('/image', (req, res) => {
-    Image.find({}, (err, items) => {
-        if(err) {
-            console.log(err);
-            res.status(500).send('An error occurred', err);
-        } else {
-            res.send({ items: items });
-        }
-    });
-});
-
-app.post('/image', upload.single('image'), (req, res, next) => {
-    const obj = {
-        name: req.body.name,
-        desc: req.body.desc,
-        img: {
-            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-            contentType: 'image/png'
-        }
-    }
-
-    Image.create(obj, (err, item) => {
+app.post('/upload', (req, res) => {
+    upload(req, res, (err) => {
         if(err) {
             console.log(err);
         } else {
-            // item.save();
-            res.send('Image uploaded successfully');
+            const newImage = {
+                name: req.body.name,
+                desc: req.body.desc,
+                image: {
+                    data: req.file.filename,
+                    contentType: 'image/png'
+                }
+            };
+
+            // newImage.save().then(() => res.send('success')).catch((err) => console.log(err));
+            Image.create(newImage, (err, item) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    // item.save();
+                    res.send('Image uploaded successfully');
+                }
+            });
         }
     })
 });
