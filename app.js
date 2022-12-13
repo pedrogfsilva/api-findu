@@ -33,21 +33,7 @@ app.use('/tag', tagRoute);
 app.use('/category', categoryRoute);
 app.use('/beacon', beaconRoute);
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'uploads')
-//     },
-//     filename: (req, file, cb) => {
-//         console.log(file);
-//         cb(null, Date.now() + path.extname(file.originalname))
-//     }
-// });
-
-// const upload = multer({ storage: storage });
-
-// app.post('/upload', upload.single('image'), (req, res) => {
-//     res.send('ok');
-// });
+app.use(express.static('uploads'));
 
 const Storage = multer.diskStorage({
     destination: 'uploads',
@@ -64,20 +50,15 @@ app.post('/upload', (req, res) => {
             console.log(err);
         } else {
             const newImage = {
-                name: req.body.name,
-                desc: req.body.desc,
                 image: {
                     data: req.file.filename,
                     contentType: 'image/png'
                 }
             };
-
-            // newImage.save().then(() => res.send('success')).catch((err) => console.log(err));
             Image.create(newImage, (err, item) => {
                 if(err) {
                     console.log(err);
                 } else {
-                    // item.save();
                     res.send('Image uploaded successfully');
                 }
             });
