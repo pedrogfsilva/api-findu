@@ -16,6 +16,7 @@ const TagSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
         required: false,
+        default: "639a0682a797daccce032f69"
     },
     positionX: {
         type: Number,
