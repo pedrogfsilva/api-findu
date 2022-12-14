@@ -62,7 +62,7 @@ const update = async (req, res) => {
         if(!id && !macAddress && !name && !category && !positionX && !positionY && !positionZ) {
             res.status(400).send({ message: 'Submit at least one field!' });
         }
-
+        
         mongoose.Types.ObjectId(req.body.category);
 
         await tagService.updateService(id, macAddress, name, category, positionX, positionY, positionZ);
