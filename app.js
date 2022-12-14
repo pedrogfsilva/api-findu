@@ -4,8 +4,6 @@ import db from './src/database/db.js';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import multer from 'multer';
-import fs from 'fs';
-import path from 'path';
 import bodyParser from 'body-parser';
 
 // importando arquivos de rotas
