@@ -1,5 +1,7 @@
+// importando módulo mongoose
 import mongoose from 'mongoose';
 
+// criando uma schema com as informações das imagens
 const ImageSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -16,6 +18,8 @@ const ImageSchema = new mongoose.Schema({
     }
 });
 
+// criando modelo
 const Image = mongoose.model('Image', ImageSchema);
 
+// exportando modelo
 export default Image;

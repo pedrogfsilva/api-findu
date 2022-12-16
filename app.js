@@ -31,8 +31,10 @@ app.use('/tag', tagRoute);
 app.use('/category', categoryRoute);
 app.use('/beacon', beaconRoute);
 
+// servindo arquivos estáticos
 app.use(express.static('uploads'));
 
+// usando middleware multer para armazenar imagens
 const Storage = multer.diskStorage({
     destination: 'uploads',
     filename: (req, file, cb) => {
@@ -42,6 +44,7 @@ const Storage = multer.diskStorage({
 
 const upload = multer({ storage: Storage }).single('testImage');
 
+// endpoint para upload das imagens
 app.post('/upload', (req, res) => {
     upload(req, res, (err) => {
         if(err) {
